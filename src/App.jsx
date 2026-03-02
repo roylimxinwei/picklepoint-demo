@@ -569,16 +569,101 @@ function MatchFocus({ match: m, onBack }) {
 // ══════════════════════════════════════
 function PlayerLive({ matches, onViewMatch, onBack }) {
   const active = matches.filter(m => m.status === "active");
+  const [scoreStep, setScoreStep] = useState("idle");
+  const [scoreA, setScoreA] = useState("");
+  const [scoreB, setScoreB] = useState("");
+  const playerMatch = matches.find(m => m.id === 4);
+  const gameNum = playerMatch?.gameNum || 1;
+
+  const numA = parseInt(scoreA) || 0;
+  const numB = parseInt(scoreB) || 0;
+  const bothFilled = scoreA !== "" && scoreB !== "";
+  const atLeast11 = numA >= 11 || numB >= 11;
+  const winBy2 = Math.abs(numA - numB) >= 2;
+  const isValid = bothFilled && atLeast11 && winBy2 && numA !== numB;
+
+  const handleReset = () => { setScoreStep("idle"); setScoreA(""); setScoreB(""); };
+
   return (
     <div style={{ minHeight: "100vh", background: "#0A0F1A" }}>
       <TopBar onBack={onBack} title="My Tournament" right={<span style={{ fontSize: 21, cursor: "pointer" }}>🔔</span>} />
       <div style={{ padding: 14 }}>
+        {scoreStep === "idle" && (
         <div style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.15)", borderRadius: 14, padding: 18, marginBottom: 12 }}>
           <div style={{ fontFamily: "JetBrains Mono", fontSize: 13, color: "#F59E0B", letterSpacing: 2, marginBottom: 6 }}>SUBMIT GAME SCORE</div>
           <div style={{ fontSize: 16, color: "#94A3B8", marginBottom: 4 }}>Court 4 · SF-2 · Patel/Lee vs Martin/Clark</div>
           <div style={{ fontSize: 14, color: "#94A3B8", marginBottom: 10 }}>No referee — submit final game scores</div>
-          <button style={{ width: "100%", padding: 12, background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.25)", borderRadius: 8, color: "#F59E0B", fontFamily: "Outfit", fontWeight: 600, fontSize: 17, cursor: "pointer" }}>Enter Game {matches.find(m => m.id === 4)?.gameNum || 1} Score →</button>
+          <button onClick={() => setScoreStep("enter")} style={{ width: "100%", padding: 12, background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.25)", borderRadius: 8, color: "#F59E0B", fontFamily: "Outfit", fontWeight: 600, fontSize: 17, cursor: "pointer" }}>Enter Game {gameNum} Score →</button>
         </div>
+        )}
+
+        {scoreStep === "enter" && (
+        <div style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.15)", borderRadius: 14, padding: 18, marginBottom: 12, animation: "slideUp 0.3s ease" }}>
+          <div style={{ fontFamily: "JetBrains Mono", fontSize: 13, color: "#F59E0B", letterSpacing: 2, marginBottom: 6 }}>ENTER GAME {gameNum} SCORE</div>
+          <div style={{ fontSize: 16, color: "#94A3B8", marginBottom: 16 }}>Court 4 · SF-2 · Patel/Lee vs Martin/Clark</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ flex: 1, fontSize: 16, fontWeight: 600, color: "#E8ECF4" }}>Patel / Lee</div>
+              <input type="number" min="0" value={scoreA} onChange={e => setScoreA(e.target.value)} placeholder="0" style={{ width: 80, padding: "10px 8px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(245,158,11,0.25)", borderRadius: 8, color: "#E8ECF4", fontFamily: "Outfit", fontWeight: 800, fontSize: 40, textAlign: "center", outline: "none" }} />
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ flex: 1, fontSize: 16, fontWeight: 600, color: "#E8ECF4" }}>Martin / Clark</div>
+              <input type="number" min="0" value={scoreB} onChange={e => setScoreB(e.target.value)} placeholder="0" style={{ width: 80, padding: "10px 8px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(245,158,11,0.25)", borderRadius: 8, color: "#E8ECF4", fontFamily: "Outfit", fontWeight: 800, fontSize: 40, textAlign: "center", outline: "none" }} />
+            </div>
+          </div>
+          {bothFilled && !isValid && (
+            <div style={{ fontSize: 14, color: "#F87171", marginBottom: 12, fontFamily: "DM Sans" }}>
+              {!atLeast11 ? "At least one team must score 11 or more" : !winBy2 ? "Winner must lead by at least 2 points" : numA === numB ? "Scores cannot be tied" : ""}
+            </div>
+          )}
+          <button onClick={() => isValid && setScoreStep("waiting")} disabled={!isValid} style={{ width: "100%", padding: 14, background: isValid ? "linear-gradient(135deg, #D97706, #F59E0B)" : "rgba(245,158,11,0.1)", border: "none", borderRadius: 10, color: isValid ? "white" : "rgba(245,158,11,0.4)", fontFamily: "Outfit", fontWeight: 700, fontSize: 17, cursor: isValid ? "pointer" : "not-allowed", transition: "all 0.2s" }}>Submit for Verification →</button>
+          <button onClick={handleReset} style={{ width: "100%", padding: 10, background: "none", border: "none", color: "#94A3B8", fontFamily: "DM Sans", fontSize: 15, cursor: "pointer", marginTop: 8 }}>Cancel</button>
+        </div>
+        )}
+
+        {scoreStep === "waiting" && (
+        <div style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.15)", borderRadius: 14, padding: 18, marginBottom: 12, textAlign: "center", animation: "slideUp 0.3s ease" }}>
+          <div style={{ fontFamily: "JetBrains Mono", fontSize: 13, color: "#F59E0B", letterSpacing: 2, marginBottom: 12, animation: "pulse 2s infinite" }}>AWAITING OPPONENT VERIFICATION</div>
+          <div style={{ fontFamily: "Outfit", fontWeight: 900, fontSize: 52, color: "#E8ECF4", marginBottom: 4 }}>{scoreA} <span style={{ color: "#64748B", fontSize: 32 }}>-</span> {scoreB}</div>
+          <div style={{ fontSize: 16, color: "#94A3B8", marginBottom: 20 }}>Patel/Lee vs Martin/Clark</div>
+          <div style={{
+            width: 200, height: 200, margin: "0 auto 8px", borderRadius: 16,
+            border: "2px solid rgba(245,158,11,0.25)", background: "#FFFFFF", padding: 16,
+            display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden"
+          }}>
+            <div style={{ width: "100%", height: "100%", display: "grid", gridTemplateColumns: "repeat(9, 1fr)", gridTemplateRows: "repeat(9, 1fr)", gap: 2 }}>
+              {Array.from({ length: 81 }).map((_, i) => {
+                const row = Math.floor(i / 9); const col = i % 9;
+                const isCorner = (row < 3 && col < 3) || (row < 3 && col > 5) || (row > 5 && col < 3);
+                const isFill = isCorner || Math.random() > 0.45;
+                return <div key={i} style={{ background: isFill ? "#1a1a2e" : "#FFFFFF", borderRadius: 1 }} />;
+              })}
+            </div>
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "#F59E0B", animation: "scanLine 2s ease-in-out infinite" }} />
+          </div>
+          <div style={{ fontFamily: "JetBrains Mono", fontSize: 19, letterSpacing: 4, color: "#E8ECF4", marginBottom: 4 }}>VS-48291-G{gameNum}</div>
+          <div style={{ fontSize: 15, color: "#94A3B8", marginBottom: 20 }}>Show this QR code to your opponent. They must scan it to confirm the score.</div>
+          <button onClick={() => setScoreStep("verified")} style={{
+            width: "100%", padding: 14, background: "linear-gradient(135deg, #22C55E, #16A34A)", border: "none",
+            borderRadius: 10, color: "white", fontFamily: "Outfit", fontWeight: 700, fontSize: 17, cursor: "pointer"
+          }}>✓ Simulate Opponent Verification</button>
+          <button onClick={handleReset} style={{ width: "100%", padding: 10, background: "none", border: "none", color: "#94A3B8", fontFamily: "DM Sans", fontSize: 15, cursor: "pointer", marginTop: 8 }}>Cancel</button>
+        </div>
+        )}
+
+        {scoreStep === "verified" && (
+        <div style={{ background: "rgba(34,197,94,0.06)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 14, padding: 24, marginBottom: 12, textAlign: "center", animation: "slideUp 0.3s ease" }}>
+          <div style={{ fontSize: 48, marginBottom: 8 }}>✓</div>
+          <div style={{ fontFamily: "Outfit", fontWeight: 700, fontSize: 22, color: "#22C55E", marginBottom: 8 }}>Score Verified & Submitted</div>
+          <div style={{ fontFamily: "Outfit", fontWeight: 800, fontSize: 44, color: "#E8ECF4", marginBottom: 4 }}>{scoreA} <span style={{ color: "#64748B", fontSize: 28 }}>-</span> {scoreB}</div>
+          <div style={{ fontSize: 16, color: "#94A3B8", marginBottom: 6 }}>Patel/Lee vs Martin/Clark · Game {gameNum}</div>
+          <div style={{ fontSize: 15, color: "#94A3B8", marginBottom: 20 }}>Both parties confirmed — score is official</div>
+          <button onClick={handleReset} style={{
+            width: "100%", padding: 14, background: "linear-gradient(135deg, #22C55E, #16A34A)", border: "none",
+            borderRadius: 10, color: "white", fontFamily: "Outfit", fontWeight: 700, fontSize: 17, cursor: "pointer"
+          }}>Done</button>
+        </div>
+        )}
         <div style={{ fontSize: 13, fontFamily: "JetBrains Mono", color: "#94A3B8", letterSpacing: 2, marginBottom: 8 }}>LIVE ACROSS TOURNAMENT</div>
         <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 8 }}>
           {active.map(m => (
