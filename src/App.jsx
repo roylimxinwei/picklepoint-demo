@@ -36,18 +36,88 @@ const DISCOVER_COMPETITIONS = [
   { id: "d5", name: "Tampines Regional", date: "May 1, 2026", venue: "Our Tampines Hub", categories: ["Men's Singles", "Women's Singles", "Mixed Doubles"], playerCount: 50, maxPlayers: 72, status: "registration", organizer: "Tampines CC", fee: "$20" },
 ];
 
+const REFEREES = [
+  { id: "ref1", name: "Alice Tan" }, { id: "ref2", name: "Ben Loh" },
+  { id: "ref3", name: "Carol Ng" }, { id: "ref4", name: "David Yeo" },
+  { id: "ref5", name: "Elena Koh" }, { id: "ref6", name: "Frank Sim" },
+];
+const COURTS = [1, 2, 3, 4, 5, 6, 7, 8];
+
+const ELIMINATION_TEAMS = [
+  { seed: 1, name: "Thunder Smash" }, { seed: 2, name: "Dink Dynasty" }, { seed: 3, name: "Net Ninjas" }, { seed: 4, name: "Court Crushers" },
+  { seed: 5, name: "Pickle Pros" }, { seed: 6, name: "Rally Kings" }, { seed: 7, name: "Drop Shot Duo" }, { seed: 8, name: "Volley Vipers" },
+  { seed: 9, name: "Spin Masters" }, { seed: 10, name: "Ace Attackers" }, { seed: 11, name: "Paddle Power" }, { seed: 12, name: "Slam Squad" },
+  { seed: 13, name: "Baseline Bandits" }, { seed: 14, name: "Lob Legends" }, { seed: 15, name: "Smash Bros" }, { seed: 16, name: "Kitchen Kings" },
+  { seed: 17, name: "Drive Force" }, { seed: 18, name: "Quick Hands" }, { seed: 19, name: "Net Rushers" }, { seed: 20, name: "Court Jesters" },
+  { seed: 21, name: "Pickle Rockets" }, { seed: 22, name: "Serve City" }, { seed: 23, name: "Backhand Blitz" }, { seed: 24, name: "Point Breakers" },
+  { seed: 25, name: "Fault Line" }, { seed: 26, name: "Topspin Tigers" }, { seed: 27, name: "Side Out" }, { seed: 28, name: "Zero Zero Two" },
+  { seed: 29, name: "Third Shot" }, { seed: 30, name: "Erne Eagles" }, { seed: 31, name: "Stacking Up" }, { seed: 32, name: "ATP Aces" },
+];
+
+const POOL_GROUPS = [
+  { name: "Group A", teams: [
+    { seed: 1, name: "Thunder Smash", w: 3, l: 0, pts: 9 }, { seed: 16, name: "Kitchen Kings", w: 2, l: 1, pts: 6 },
+    { seed: 17, name: "Drive Force", w: 1, l: 2, pts: 3 }, { seed: 32, name: "ATP Aces", w: 0, l: 3, pts: 0 },
+  ]},
+  { name: "Group B", teams: [
+    { seed: 2, name: "Dink Dynasty", w: 3, l: 0, pts: 9 }, { seed: 15, name: "Smash Bros", w: 2, l: 1, pts: 6 },
+    { seed: 18, name: "Quick Hands", w: 1, l: 2, pts: 3 }, { seed: 31, name: "Stacking Up", w: 0, l: 3, pts: 0 },
+  ]},
+  { name: "Group C", teams: [
+    { seed: 3, name: "Net Ninjas", w: 2, l: 1, pts: 7 }, { seed: 14, name: "Lob Legends", w: 2, l: 1, pts: 6 },
+    { seed: 19, name: "Net Rushers", w: 1, l: 2, pts: 4 }, { seed: 30, name: "Erne Eagles", w: 1, l: 2, pts: 3 },
+  ]},
+  { name: "Group D", teams: [
+    { seed: 4, name: "Court Crushers", w: 3, l: 0, pts: 9 }, { seed: 13, name: "Baseline Bandits", w: 2, l: 1, pts: 6 },
+    { seed: 20, name: "Court Jesters", w: 1, l: 2, pts: 3 }, { seed: 29, name: "Third Shot", w: 0, l: 3, pts: 0 },
+  ]},
+  { name: "Group E", teams: [
+    { seed: 5, name: "Pickle Pros", w: 2, l: 1, pts: 7 }, { seed: 12, name: "Slam Squad", w: 2, l: 1, pts: 6 },
+    { seed: 21, name: "Pickle Rockets", w: 1, l: 2, pts: 4 }, { seed: 28, name: "Zero Zero Two", w: 1, l: 2, pts: 3 },
+  ]},
+  { name: "Group F", teams: [
+    { seed: 6, name: "Rally Kings", w: 3, l: 0, pts: 9 }, { seed: 11, name: "Paddle Power", w: 1, l: 2, pts: 4 },
+    { seed: 22, name: "Serve City", w: 2, l: 1, pts: 6 }, { seed: 27, name: "Side Out", w: 0, l: 3, pts: 0 },
+  ]},
+  { name: "Group G", teams: [
+    { seed: 7, name: "Drop Shot Duo", w: 2, l: 1, pts: 7 }, { seed: 10, name: "Ace Attackers", w: 2, l: 1, pts: 6 },
+    { seed: 23, name: "Backhand Blitz", w: 1, l: 2, pts: 4 }, { seed: 26, name: "Topspin Tigers", w: 1, l: 2, pts: 3 },
+  ]},
+  { name: "Group H", teams: [
+    { seed: 8, name: "Volley Vipers", w: 3, l: 0, pts: 9 }, { seed: 9, name: "Spin Masters", w: 2, l: 1, pts: 6 },
+    { seed: 24, name: "Point Breakers", w: 1, l: 2, pts: 3 }, { seed: 25, name: "Fault Line", w: 0, l: 3, pts: 0 },
+  ]},
+];
+
+// 64 players for Mixed Doubles A (32 teams × 2), generated from ELIMINATION_TEAMS
+const MDA_PLAYER_NAMES = [
+  "A. Lim", "B. Tan", "C. Ng", "D. Wong", "E. Goh", "F. Chua", "G. Ong", "H. Koh",
+  "I. Teo", "J. Yeo", "K. Sim", "L. Ho", "M. Chng", "N. Soh", "O. Tay", "P. Low",
+  "Q. Foo", "R. Beh", "S. Yap", "T. Heng", "U. Chia", "V. Wee", "W. Seah", "X. Poh",
+  "Y. Kwek", "Z. Neo", "A. Toh", "B. Hng", "C. Quek", "D. Loh", "E. Aw", "F. Ang",
+  "G. Gan", "H. Sng", "I. Png", "J. Chew", "K. Lai", "L. Tng", "M. Kok", "N. Sun",
+  "O. Ee", "P. Bay", "Q. Tok", "R. Han", "S. Lin", "T. Mah", "U. Phua", "V. Loo",
+  "W. Nah", "X. Hor", "Y. Kng", "Z. Seet", "A. Lua", "B. Gn", "C. Hoe", "D. Boo",
+  "E. Ser", "F. Lei", "G. Lam", "H. Chai", "I. Fong", "J. Khoo", "K. Leow", "L. Chin",
+];
+const MDA_COMPANIES = ["Google", "Meta", "Stripe", "Shopee", "Grab", "DBS", "Tiktok", "Apple"];
+const MDA_PLAYERS = ELIMINATION_TEAMS.flatMap((team, i) => {
+  const p1 = MDA_PLAYER_NAMES[i * 2]; const p2 = MDA_PLAYER_NAMES[i * 2 + 1]; const co = MDA_COMPANIES[i % MDA_COMPANIES.length];
+  return [
+    { name: p1, email: `${p1.toLowerCase().replace(". ", ".")}@email.com`, category: "Mixed Doubles A", partner: p2, checkedIn: true, company: co, paymentStatus: "paid" },
+    { name: p2, email: `${p2.toLowerCase().replace(". ", ".")}@email.com`, category: "Mixed Doubles A", partner: p1, checkedIn: true, company: co, paymentStatus: "paid" },
+  ];
+});
+
 const REGISTERED_PLAYERS = [
-  { name: "A. Smith", email: "a.smith@email.com", category: "Mixed Doubles A", partner: "B. Chen", checkedIn: true, company: "Google", paymentStatus: "paid" },
-  { name: "B. Chen", email: "b.chen@email.com", category: "Mixed Doubles A", partner: "A. Smith", checkedIn: true, company: "Google", paymentStatus: "paid" },
-  { name: "C. Park", email: "c.park@email.com", category: "Mixed Doubles A", partner: "D. Jones", checkedIn: true, company: "Meta", paymentStatus: "paid" },
-  { name: "D. Jones", email: "d.jones@email.com", category: "Mixed Doubles A", partner: "C. Park", checkedIn: false, company: "Meta", paymentStatus: "paid" },
+  ...MDA_PLAYERS,
   { name: "E. Garcia", email: "e.garcia@email.com", category: "Men's Doubles", partner: "F. Kim", checkedIn: true, company: "Stripe", paymentStatus: "paid" },
   { name: "F. Kim", email: "f.kim@email.com", category: "Men's Doubles", partner: "E. Garcia", checkedIn: true, company: "Stripe", paymentStatus: "paid" },
-  { name: "G. Patel", email: "g.patel@email.com", category: "Men's Doubles", partner: "H. Lee", checkedIn: false, company: "Shopee", paymentStatus: "paid" },
-  { name: "H. Lee", email: "h.lee@email.com", category: "Men's Doubles", partner: "H. Lee", checkedIn: true, company: "Shopee", paymentStatus: "paid" },
+  { name: "G. Patel", email: "g.patel@email.com", category: "Men's Doubles", partner: "H. Lee", checkedIn: true, company: "Shopee", paymentStatus: "paid" },
+  { name: "H. Lee", email: "h.lee@email.com", category: "Men's Doubles", partner: "G. Patel", checkedIn: true, company: "Shopee", paymentStatus: "paid" },
   { name: "I. Wilson", email: "i.wilson@email.com", category: "Women's Singles", partner: null, checkedIn: true, company: "Google", paymentStatus: "paid" },
   { name: "J. Brown", email: "j.brown@email.com", category: "Women's Singles", partner: null, checkedIn: true, company: "Grab", paymentStatus: "paid" },
-  { name: "K. Davis", email: "k.davis@email.com", category: "Women's Singles", partner: null, checkedIn: false, company: "Grab", paymentStatus: "paid" },
+  { name: "K. Davis", email: "k.davis@email.com", category: "Women's Singles", partner: null, checkedIn: true, company: "Grab", paymentStatus: "paid" },
   { name: "L. Moore", email: "l.moore@email.com", category: "Women's Singles", partner: null, checkedIn: true, company: "DBS", paymentStatus: "paid" },
 ];
 
@@ -62,6 +132,21 @@ const REG_PHASE_PLAYERS = [
   { name: "T. Ng", email: "t.ng@email.com", category: "Pro Doubles", partner: "U. Chua", company: "Meta", paymentStatus: "registered" },
   { name: "U. Chua", email: "u.chua@email.com", category: "Pro Doubles", partner: "T. Ng", company: "Meta", paymentStatus: "paid" },
 ];
+
+function generateBracketMatches(teams16) {
+  const matches = [];
+  for (let i = 0; i < 8; i++) {
+    matches.push({ id: `r16_${i + 1}`, round: "R16", matchNum: i + 1, teamA: teams16[i], teamB: teams16[15 - i], court: null, referee: null, status: "upcoming" });
+  }
+  for (let i = 0; i < 4; i++) {
+    matches.push({ id: `qf_${i + 1}`, round: "QF", matchNum: i + 1, teamA: null, teamB: null, court: null, referee: null, status: "upcoming", feedsFrom: [`r16_${i * 2 + 1}`, `r16_${i * 2 + 2}`] });
+  }
+  for (let i = 0; i < 2; i++) {
+    matches.push({ id: `sf_${i + 1}`, round: "SF", matchNum: i + 1, teamA: null, teamB: null, court: null, referee: null, status: "upcoming", feedsFrom: [`qf_${i * 2 + 1}`, `qf_${i * 2 + 2}`] });
+  }
+  matches.push({ id: "final_1", round: "Final", matchNum: 1, teamA: null, teamB: null, court: null, referee: null, status: "upcoming", feedsFrom: ["sf_1", "sf_2"] });
+  return matches;
+}
 
 const initialMatches = [
   { id: 1, court: 1, teamA: TEAMS[0], teamB: TEAMS[1], division: "Mixed Doubles A", round: "QF-1", games: [], currentGame: { a: 0, b: 0 }, gameNum: 1, matchScore: { a: 0, b: 0 }, status: "active", startedAt: Date.now() - 420000, scoredBy: "referee" },
@@ -113,6 +198,15 @@ export default function PicklePoint() {
   const [selectedComp, setSelectedComp] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [orgComps, setOrgComps] = useState(ORG_COMPETITIONS);
+  const [goLiveConfirm, setGoLiveConfirm] = useState(null);
+
+  const handleGoLive = (comp) => {
+    if (comp.playerCount < comp.maxPlayers) { setGoLiveConfirm(comp); } else { executeGoLive(comp.id); }
+  };
+  const executeGoLive = (compId) => {
+    setOrgComps(prev => prev.map(c => c.id === compId ? { ...c, status: "live" } : c));
+    setGoLiveConfirm(null);
+  };
 
   useEffect(() => {
     if (view === "landing") return;
@@ -214,10 +308,27 @@ export default function PicklePoint() {
       {view === "referee" && !authed && <AuthScreen role="referee" onAuth={() => setAuthed(true)} onBack={() => goTo("landing")} />}
       {view === "referee" && authed && <RefereeFlow match={matches.find(m => m.id === 1)} scorePoint={scorePoint} undoPoint={undoPoint} startNextGame={startNextGame} scoreFlash={scoreFlash} onBack={() => goTo("landing")} />}
       {view === "organizer" && !authed && <AuthScreen role="organizer" onAuth={() => setAuthed(true)} onBack={() => goTo("landing")} />}
-      {view === "organizer" && authed && !selectedComp && <OrgCompList onSelect={setSelectedComp} onBack={() => goTo("landing")} competitions={orgComps} onCreateEvent={() => setView("org_create_event")} />}
+      {view === "organizer" && authed && !selectedComp && <OrgCompList onSelect={setSelectedComp} onBack={() => goTo("landing")} competitions={orgComps} onCreateEvent={() => setView("org_create_event")} onGoLive={handleGoLive} />}
       {view === "org_create_event" && <CreateEvent onSubmit={(event) => { setOrgComps(prev => [...prev, event]); setView("organizer"); setAuthed(true); }} onBack={() => { setView("organizer"); setAuthed(true); }} />}
       {view === "organizer" && authed && selectedComp && !selectedCategory && <CategoryList comp={selectedComp} onSelect={setSelectedCategory} onBack={() => setSelectedComp(null)} />}
       {view === "organizer" && authed && selectedComp && selectedCategory && <OrgDashboard matches={matches} category={selectedCategory} comp={selectedComp} onBack={() => setSelectedCategory(null)} />}
+
+      {/* Go Live Confirmation Modal */}
+      {goLiveConfirm && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 999, padding: 24 }}>
+          <div style={{ background: "#1E293B", border: "1px solid rgba(168,85,247,0.3)", borderRadius: 16, padding: 28, maxWidth: 400, width: "100%", animation: "slideUp 0.3s ease" }}>
+            <div style={{ fontSize: 36, textAlign: "center", marginBottom: 12 }}>⚠️</div>
+            <div style={{ fontFamily: "Outfit", fontSize: 21, fontWeight: 700, color: "#E8ECF4", textAlign: "center", marginBottom: 8 }}>Go Live?</div>
+            <div style={{ fontSize: 16, color: "#94A3B8", textAlign: "center", marginBottom: 24, lineHeight: 1.5 }}>
+              {goLiveConfirm.playerCount}/{goLiveConfirm.maxPlayers} players registered. Go live anyway?
+            </div>
+            <div style={{ display: "flex", gap: 10 }}>
+              <button onClick={() => setGoLiveConfirm(null)} style={{ flex: 1, padding: 14, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, color: "#94A3B8", fontFamily: "Outfit", fontWeight: 600, fontSize: 16, cursor: "pointer" }}>Cancel</button>
+              <button onClick={() => executeGoLive(goLiveConfirm.id)} style={{ flex: 1, padding: 14, background: "linear-gradient(135deg, #16A34A, #22C55E)", border: "none", borderRadius: 10, color: "white", fontFamily: "Outfit", fontWeight: 700, fontSize: 16, cursor: "pointer" }}>Go Live Anyway →</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -831,7 +942,7 @@ function CreateEvent({ onSubmit, onBack }) {
 // ══════════════════════════════════════
 // ORGANIZER: COMP LIST
 // ══════════════════════════════════════
-function OrgCompList({ onSelect, onBack, onCreateEvent, competitions }) {
+function OrgCompList({ onSelect, onBack, onCreateEvent, competitions, onGoLive }) {
   return (
     <div style={{ minHeight: "100vh", background: "#0A0F1A" }}>
       <TopBar onBack={onBack} title="My Events" />
@@ -864,6 +975,12 @@ function OrgCompList({ onSelect, onBack, onCreateEvent, competitions }) {
                   <div style={{ fontSize: 13, color: "#94A3B8", fontFamily: "JetBrains Mono" }}>{isReg ? "registered" : "players"}</div>
                 </div>
               </div>
+              {isReg && onGoLive && (
+                <button onClick={(e) => { e.stopPropagation(); onGoLive(comp); }} style={{
+                  marginTop: 10, width: "100%", padding: "12px 0", background: "linear-gradient(135deg, #16A34A, #22C55E)",
+                  border: "none", borderRadius: 10, color: "white", fontFamily: "Outfit", fontWeight: 700, fontSize: 17, cursor: "pointer", transition: "all 0.2s"
+                }}>Go Live →</button>
+              )}
             </button>
           );
         })}
@@ -905,8 +1022,8 @@ function CategoryList({ comp, onSelect, onBack }) {
 // ORGANIZER DASHBOARD
 // ══════════════════════════════════════
 function OrgDashboard({ matches, category, comp, onBack }) {
-  const [tab, setTab] = useState("courts");
   const isLive = comp.status === "live";
+  const [tab, setTab] = useState(isLive ? "courts" : "players");
   const catMatches = matches.filter(m => m.division === category);
   const catPlayers = isLive ? REGISTERED_PLAYERS.filter(p => p.category === category) : REG_PHASE_PLAYERS.filter(p => p.category === category);
 
@@ -915,6 +1032,10 @@ function OrgDashboard({ matches, category, comp, onBack }) {
   const [showBroadcast, setShowBroadcast] = useState(false);
   const [broadcastMsg, setBroadcastMsg] = useState("");
   const [broadcastSent, setBroadcastSent] = useState(false);
+
+  // Elimination & Bracket local state
+  const [bracketMatches, setBracketMatches] = useState([]);
+  const [selectedMatch, setSelectedMatch] = useState(null);
 
   const companies = [...new Set(catPlayers.map(p => p.company))].sort();
 
@@ -930,7 +1051,32 @@ function OrgDashboard({ matches, category, comp, onBack }) {
     return true;
   });
 
-  const tabs = isLive ? ["courts", "queue", "players", "alerts"] : ["players", "alerts"];
+  const hasElimination = comp.id === "comp1" && category === "Mixed Doubles A";
+  const tabs = isLive ? (hasElimination ? ["courts", "elimination", "bracket", "queue", "players", "alerts"] : ["courts", "queue", "players", "alerts"]) : ["players", "alerts"];
+
+  const advancing = [];
+  POOL_GROUPS.forEach(g => { advancing.push(g.teams[0]); advancing.push(g.teams[1]); });
+
+  const handleAdvanceToBracket = () => {
+    const bm = generateBracketMatches(advancing);
+    setBracketMatches(bm);
+    setTab("bracket");
+  };
+
+  const shuffleAll = () => {
+    const shuffled = [...advancing].sort(() => Math.random() - 0.5);
+    setBracketMatches(prev => prev.map(m => {
+      if (m.round === "R16") {
+        const idx = m.matchNum - 1;
+        return { ...m, teamA: shuffled[idx * 2] || null, teamB: shuffled[idx * 2 + 1] || null, court: COURTS[idx] || null, referee: REFEREES[idx % REFEREES.length] || null };
+      }
+      return m;
+    }));
+  };
+
+  const rounds = ["R16", "QF", "SF", "Final"];
+  const roundLabels = { R16: "Round of 16", QF: "Quarterfinals", SF: "Semifinals", Final: "Final" };
+  const statusColors = { upcoming: "#94A3B8", active: "#A855F7", completed: "#22C55E" };
 
   return (
     <div style={{ minHeight: "100vh", background: "#0A0F1A" }}>
@@ -1074,6 +1220,111 @@ function OrgDashboard({ matches, category, comp, onBack }) {
           </>
         )}
 
+        {tab === "elimination" && isLive && (
+          <div>
+            <div style={{ textAlign: "center", marginBottom: 16 }}>
+              <div style={{ fontFamily: "JetBrains Mono", fontSize: 13, color: "#F59E0B", letterSpacing: 2, marginBottom: 4 }}>ROUND ROBIN</div>
+              <div style={{ fontFamily: "Outfit", fontSize: 21, fontWeight: 700, color: "#E8ECF4" }}>32 teams · 8 groups · Top 2 advance</div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 12 }}>
+              {POOL_GROUPS.map((group, gi) => (
+                <div key={gi} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(245,158,11,0.15)", borderRadius: 14, overflow: "hidden", animation: `fadeIn 0.3s ease ${gi * 0.06}s both` }}>
+                  <div style={{ padding: "10px 14px", background: "rgba(245,158,11,0.08)", borderBottom: "1px solid rgba(245,158,11,0.1)" }}>
+                    <span style={{ fontFamily: "Outfit", fontWeight: 700, fontSize: 17, color: "#F59E0B" }}>{group.name}</span>
+                  </div>
+                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                    <thead>
+                      <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                        {["Team", "W", "L", "Pts"].map(h => (
+                          <th key={h} style={{ padding: "8px 10px", fontFamily: "JetBrains Mono", fontSize: 12, color: "#94A3B8", fontWeight: 600, textAlign: h === "Team" ? "left" : "center", letterSpacing: 1 }}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {group.teams.map((team, ti) => {
+                        const advances = ti < 2;
+                        return (
+                          <tr key={ti} style={{ borderBottom: ti < 3 ? "1px solid rgba(255,255,255,0.03)" : "none", background: advances ? "rgba(34,197,94,0.04)" : "transparent", borderLeft: advances ? "3px solid #22C55E" : "3px solid transparent" }}>
+                            <td style={{ padding: "9px 10px", fontSize: 15, fontWeight: 600, color: advances ? "#E8ECF4" : "#94A3B8" }}>
+                              <span style={{ fontFamily: "JetBrains Mono", fontSize: 12, color: "#64748B", marginRight: 6 }}>#{team.seed}</span>{team.name}
+                            </td>
+                            <td style={{ textAlign: "center", fontFamily: "JetBrains Mono", fontSize: 15, color: "#22C55E" }}>{team.w}</td>
+                            <td style={{ textAlign: "center", fontFamily: "JetBrains Mono", fontSize: 15, color: "#EF4444" }}>{team.l}</td>
+                            <td style={{ textAlign: "center", fontFamily: "Outfit", fontWeight: 800, fontSize: 17, color: advances ? "#F59E0B" : "#94A3B8" }}>{team.pts}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              ))}
+            </div>
+            <button onClick={handleAdvanceToBracket} style={{
+              width: "100%", padding: 16, marginTop: 20, background: COLORS.organizer.gradient,
+              border: "none", borderRadius: 12, color: "white", fontFamily: "Outfit", fontWeight: 700, fontSize: 19, cursor: "pointer"
+            }}>Advance to Bracket (16 teams) →</button>
+          </div>
+        )}
+
+        {tab === "bracket" && isLive && (
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, flexWrap: "wrap", gap: 8 }}>
+              <div>
+                <div style={{ fontFamily: "Outfit", fontSize: 19, fontWeight: 700, color: "#E8ECF4" }}>Single Elimination</div>
+                <div style={{ fontFamily: "JetBrains Mono", fontSize: 13, color: "#94A3B8" }}>{bracketMatches.length} matches · 16 teams</div>
+              </div>
+              <button onClick={shuffleAll} style={{
+                padding: "10px 18px", background: "rgba(168,85,247,0.1)", border: "1px solid rgba(168,85,247,0.25)",
+                borderRadius: 10, color: COLORS.organizer.primary, fontFamily: "Outfit", fontWeight: 600, fontSize: 15, cursor: "pointer"
+              }}>🔀 Shuffle All Assignments</button>
+            </div>
+            {bracketMatches.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "40px 20px", color: "#94A3B8" }}>
+                <div style={{ fontSize: 36, marginBottom: 12 }}>🏆</div>
+                <div style={{ fontFamily: "Outfit", fontSize: 19, fontWeight: 600, color: "#E8ECF4", marginBottom: 8 }}>No bracket yet</div>
+                <div style={{ fontSize: 16 }}>Go to the Elimination tab and click "Advance to Bracket" to generate the bracket.</div>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 16 }}>
+                  {rounds.map((round) => {
+                    const matchesByRound = bracketMatches.filter(m => m.round === round);
+                    return (
+                      <div key={round} style={{ minWidth: 190, flex: "1 0 190px", display: "flex", flexDirection: "column", gap: 8 }}>
+                        <div style={{ fontFamily: "JetBrains Mono", fontSize: 12, color: "#A855F7", letterSpacing: 2, textAlign: "center", marginBottom: 4 }}>{roundLabels[round]}</div>
+                        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-around", flex: 1, gap: round === "R16" ? 6 : round === "QF" ? 24 : round === "SF" ? 60 : 120 }}>
+                          {matchesByRound.map(m => (
+                            <button key={m.id} onClick={() => setSelectedMatch(m)} style={{
+                              width: "100%", minWidth: 180, padding: 10, background: m.status === "active" ? "rgba(168,85,247,0.06)" : "rgba(255,255,255,0.03)",
+                              border: `1px solid ${m.status === "active" ? "rgba(168,85,247,0.25)" : "rgba(255,255,255,0.07)"}`,
+                              borderRadius: 10, cursor: "pointer", color: "#E8ECF4", textAlign: "left", transition: "all 0.15s"
+                            }}
+                              onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(168,85,247,0.4)"; }}
+                              onMouseLeave={e => { e.currentTarget.style.borderColor = m.status === "active" ? "rgba(168,85,247,0.25)" : "rgba(255,255,255,0.07)"; }}
+                            >
+                              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                                <span style={{ fontFamily: "JetBrains Mono", fontSize: 11, color: "#64748B" }}>{m.court ? `Ct ${m.court}` : "—"}</span>
+                                <span style={{ fontFamily: "JetBrains Mono", fontSize: 11, color: "#64748B" }}>{m.referee ? m.referee.name : "No ref"}</span>
+                              </div>
+                              <div style={{ fontSize: 14, fontWeight: 600, color: m.teamA ? "#E8ECF4" : "#64748B", marginBottom: 3 }}>{m.teamA ? m.teamA.name : "TBD"}</div>
+                              <div style={{ fontFamily: "JetBrains Mono", fontSize: 11, color: "#64748B", textAlign: "center", margin: "2px 0" }}>vs</div>
+                              <div style={{ fontSize: 14, fontWeight: 600, color: m.teamB ? "#E8ECF4" : "#64748B", marginBottom: 4 }}>{m.teamB ? m.teamB.name : "TBD"}</div>
+                              <div style={{ display: "flex", alignItems: "center", gap: 4, justifyContent: "flex-end" }}>
+                                <div style={{ width: 6, height: 6, borderRadius: "50%", background: statusColors[m.status] || "#94A3B8" }} />
+                                <span style={{ fontFamily: "JetBrains Mono", fontSize: 11, color: statusColors[m.status] || "#94A3B8" }}>{m.status}</span>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
         {tab === "queue" && isLive && (
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {[{ teams: "Garcia/Kim vs. Winner SF-2", round: "Final", eta: "~25 min" }, { teams: "TBD vs. TBD", round: "3rd Place", eta: "~30 min" }].map((m, i) => (
@@ -1090,7 +1341,7 @@ function OrgDashboard({ matches, category, comp, onBack }) {
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             {(isLive ? [
               { text: "Court 5 match exceeding 20 min", type: "warning", time: "Just now" },
-              { text: "D. Jones has NOT checked in — QF-2 affected", type: "warning", time: "3 min ago" },
+              { text: "Court 2 running 5 min behind schedule", type: "warning", time: "3 min ago" },
               { text: "Court 3: Game 1 complete — Wilson/Brown 11-8", type: "info", time: "5 min ago" },
               { text: "Referee assigned to Court 1 and Court 3", type: "success", time: "12 min ago" },
             ] : [
@@ -1111,6 +1362,71 @@ function OrgDashboard({ matches, category, comp, onBack }) {
           </div>
         )}
       </div>
+
+      {/* Bracket Assignment Modal */}
+      {selectedMatch && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 999, padding: 24 }}>
+          <div style={{ background: "#1E293B", border: "1px solid rgba(168,85,247,0.3)", borderRadius: 16, padding: 24, maxWidth: 400, width: "100%", animation: "slideUp 0.3s ease", maxHeight: "90vh", overflowY: "auto" }}>
+            <div style={{ fontFamily: "Outfit", fontSize: 21, fontWeight: 700, color: "#E8ECF4", marginBottom: 4 }}>{selectedMatch.round} #{selectedMatch.matchNum}</div>
+            <div style={{ fontFamily: "JetBrains Mono", fontSize: 13, color: "#94A3B8", marginBottom: 20 }}>Match Assignment</div>
+
+            <label style={{ display: "block", fontSize: 13, fontFamily: "JetBrains Mono", color: "#94A3B8", marginBottom: 6 }}>TEAM A</label>
+            <select value={selectedMatch.teamA ? selectedMatch.teamA.name : ""} onChange={e => {
+              const team = advancing.find(t => t.name === e.target.value) || null;
+              setBracketMatches(prev => prev.map(m => m.id === selectedMatch.id ? { ...m, teamA: team } : m));
+              setSelectedMatch(prev => ({ ...prev, teamA: team }));
+            }} style={{ width: "100%", padding: "12px 14px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(168,85,247,0.2)", borderRadius: 8, color: "#E8ECF4", fontSize: 16, outline: "none", marginBottom: 14, cursor: "pointer" }}>
+              <option value="">TBD</option>
+              {advancing.map(t => <option key={t.name} value={t.name}>{t.name} (#{t.seed})</option>)}
+            </select>
+
+            <label style={{ display: "block", fontSize: 13, fontFamily: "JetBrains Mono", color: "#94A3B8", marginBottom: 6 }}>TEAM B</label>
+            <select value={selectedMatch.teamB ? selectedMatch.teamB.name : ""} onChange={e => {
+              const team = advancing.find(t => t.name === e.target.value) || null;
+              setBracketMatches(prev => prev.map(m => m.id === selectedMatch.id ? { ...m, teamB: team } : m));
+              setSelectedMatch(prev => ({ ...prev, teamB: team }));
+            }} style={{ width: "100%", padding: "12px 14px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(168,85,247,0.2)", borderRadius: 8, color: "#E8ECF4", fontSize: 16, outline: "none", marginBottom: 14, cursor: "pointer" }}>
+              <option value="">TBD</option>
+              {advancing.map(t => <option key={t.name} value={t.name}>{t.name} (#{t.seed})</option>)}
+            </select>
+
+            <label style={{ display: "block", fontSize: 13, fontFamily: "JetBrains Mono", color: "#94A3B8", marginBottom: 6 }}>COURT</label>
+            <select value={selectedMatch.court || ""} onChange={e => {
+              const court = e.target.value ? parseInt(e.target.value) : null;
+              setBracketMatches(prev => prev.map(m => m.id === selectedMatch.id ? { ...m, court } : m));
+              setSelectedMatch(prev => ({ ...prev, court }));
+            }} style={{ width: "100%", padding: "12px 14px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(168,85,247,0.2)", borderRadius: 8, color: "#E8ECF4", fontSize: 16, outline: "none", marginBottom: 14, cursor: "pointer" }}>
+              <option value="">—</option>
+              {COURTS.map(c => <option key={c} value={c}>Court {c}</option>)}
+            </select>
+
+            <label style={{ display: "block", fontSize: 13, fontFamily: "JetBrains Mono", color: "#94A3B8", marginBottom: 6 }}>REFEREE</label>
+            <select value={selectedMatch.referee ? selectedMatch.referee.id : ""} onChange={e => {
+              const referee = REFEREES.find(r => r.id === e.target.value) || null;
+              setBracketMatches(prev => prev.map(m => m.id === selectedMatch.id ? { ...m, referee } : m));
+              setSelectedMatch(prev => ({ ...prev, referee }));
+            }} style={{ width: "100%", padding: "12px 14px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(168,85,247,0.2)", borderRadius: 8, color: "#E8ECF4", fontSize: 16, outline: "none", marginBottom: 14, cursor: "pointer" }}>
+              <option value="">No Referee</option>
+              {REFEREES.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
+            </select>
+
+            <label style={{ display: "block", fontSize: 13, fontFamily: "JetBrains Mono", color: "#94A3B8", marginBottom: 6 }}>STATUS</label>
+            <div style={{ display: "flex", gap: 6, marginBottom: 20 }}>
+              {["upcoming", "active", "completed"].map(s => (
+                <Chip key={s} label={s} active={selectedMatch.status === s} color={statusColors[s]} onClick={() => {
+                  setBracketMatches(prev => prev.map(m => m.id === selectedMatch.id ? { ...m, status: s } : m));
+                  setSelectedMatch(prev => ({ ...prev, status: s }));
+                }} />
+              ))}
+            </div>
+
+            <button onClick={() => setSelectedMatch(null)} style={{
+              width: "100%", padding: 14, background: COLORS.organizer.gradient, border: "none", borderRadius: 10,
+              color: "white", fontFamily: "Outfit", fontWeight: 700, fontSize: 17, cursor: "pointer"
+            }}>Done</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
