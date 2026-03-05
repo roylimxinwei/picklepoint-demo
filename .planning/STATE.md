@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Completed 01-03-PLAN.md (checkpoint:human-verify pending)"
-last_updated: "2026-03-05T04:59:17.768Z"
+stopped_at: Completed 01-03-PLAN.md
+last_updated: "2026-03-05T05:38:08.090Z"
 last_activity: 2026-03-05 — 01-01 FastAPI backend scaffolded, 4 tests passing
 progress:
   total_phases: 8
@@ -52,6 +52,7 @@ Progress: [███░░░░░░░] 33%
 *Updated after each plan completion*
 | Phase 01-scaffolding P02 | 3 | 2 tasks | 11 files |
 | Phase 01-scaffolding P03 | 3 | 1 tasks | 4 files |
+| Phase 01-scaffolding P03 | 39min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,8 @@ Recent decisions affecting current work:
 - [Phase 01-scaffolding]: middleware.js placed in src/ (not src/app/) per Supabase SSR docs requirement
 - [Phase 01-scaffolding]: Google Fonts loaded via link tags in layout.jsx head to match demo font stack (Outfit, DM Sans, JetBrains Mono)
 - [Phase 01-scaffolding]: keep-warm.yml uses timeout-minutes: 1 on job to prevent runaway workflow minutes if Railway endpoint hangs
+- [Phase 01-scaffolding]: keep-warm.yml uses timeout-minutes: 1 on the job to prevent runaway workflow minutes if Railway endpoint hangs
+- [Phase 01-scaffolding]: .gitignore files separated per subproject (root/backend/frontend) for clarity and git performance
 
 ### Pending Todos
 
@@ -84,6 +87,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-05T04:59:17.766Z
-Stopped at: Completed 01-03-PLAN.md (checkpoint:human-verify pending)
+Last session: 2026-03-05T05:38:08.088Z
+Stopped at: Completed 01-03-PLAN.md
 Resume file: None
