@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-03-04T15:33:15.574Z"
+stopped_at: Completed 01-scaffolding-01-01-PLAN.md
+last_updated: "2026-03-05T04:55:04.782Z"
 last_activity: 2026-03-04 — Roadmap created, 31 requirements mapped across 8 phases
 progress:
   total_phases: 8
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 3
+  completed_plans: 1
   percent: 0
 ---
 
@@ -26,28 +26,28 @@ See: .planning/PROJECT.md (updated 2026-03-04)
 ## Current Position
 
 Phase: 1 of 8 (Scaffolding)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-04 — Roadmap created, 31 requirements mapped across 8 phases
+Plan: 1 of 3 in current phase (01-01 complete)
+Status: In Progress
+Last activity: 2026-03-05 — 01-01 FastAPI backend scaffolded, 4 tests passing
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [███░░░░░░░] 33%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: -
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: 2 min
+- Total execution time: 0.03 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-scaffolding | 1/3 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: none yet
-- Trend: -
+- Last 5 plans: 01-01 (2 min)
+- Trend: Establishing baseline
 
 *Updated after each plan completion*
 
@@ -62,6 +62,9 @@ Recent decisions affecting current work:
 - [Init]: Server-authoritative scoring — all point submissions go through FastAPI, never written by clients directly
 - [Init]: Append-only match events — UNDO is an insert, not a delete; state derived by replaying the log
 - [Init]: Idempotency keys required from day one — client UUID per point submission, DB UNIQUE constraint
+- [Phase 01-scaffolding]: CORSMiddleware uses explicit origins from ALLOWED_ORIGINS env var — wildcard + credentials raises RuntimeError
+- [Phase 01-scaffolding]: pydantic-settings with lru_cache get_settings() singleton; cache_clear() in tests for isolation
+- [Phase 01-scaffolding]: Railway deployment uses nixpacks builder with uvicorn main:app --host 0.0.0.0 --port $PORT
 
 ### Pending Todos
 
@@ -75,6 +78,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-04T15:33:15.571Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-scaffolding/01-CONTEXT.md
+Last session: 2026-03-05T04:55:04.780Z
+Stopped at: Completed 01-scaffolding-01-01-PLAN.md
+Resume file: None
