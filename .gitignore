@@ -1,4 +1,12 @@
-node_modules
-dist
+node_modules/
+.env
+.env.local
+.env*.local
+__pycache__/
+*.pyc
+.pytest_cache/
+dist/
+.next/
+.vercel/
 .DS_Store
-*.local
+.claude
