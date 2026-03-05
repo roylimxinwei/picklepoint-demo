@@ -12,7 +12,7 @@ PicklePoint is built in strict dependency order: infrastructure first, then auth
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Scaffolding** - Next.js, FastAPI, and Supabase repos wired together and deployed
+- [x] **Phase 1: Scaffolding** - Next.js, FastAPI, and Supabase repos wired together and deployed (completed 2026-03-05)
 - [ ] **Phase 2: Database Schema** - All tables, RLS policies, and migrations in place
 - [ ] **Phase 3: Authentication** - Supabase Auth fully integrated across Next.js and FastAPI
 - [ ] **Phase 4: Event and Player Management** - Organizers create events, players register and check in
@@ -132,7 +132,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Scaffolding | 2/3 | In Progress|  |
+| 1. Scaffolding | 3/3 | Complete   | 2026-03-05 |
 | 2. Database Schema | 0/TBD | Not started | - |
 | 3. Authentication | 0/TBD | Not started | - |
 | 4. Event and Player Management | 0/TBD | Not started | - |
