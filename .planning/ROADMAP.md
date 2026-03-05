@@ -33,7 +33,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Next.js can make a cross-origin request to FastAPI without CORS errors in both dev and production
   4. Supabase project exists with environment variables wired into both Next.js and FastAPI
   5. A local dev run of `npm run dev` (Next.js) and `uvicorn` (FastAPI) connects to Supabase without errors
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — FastAPI backend with health endpoint, CORS, pydantic-settings, and pytest tests
+- [ ] 01-02-PLAN.md — Next.js frontend with App Router, Supabase SSR clients, auth middleware, and API helper
+- [ ] 01-03-PLAN.md — Integration wiring: gitignore, GitHub Actions keep-warm, and end-to-end verification
 
 ### Phase 2: Database Schema
 **Goal**: All data tables exist with access controls enforced from day one
@@ -127,7 +132,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Scaffolding | 0/TBD | Not started | - |
+| 1. Scaffolding | 0/3 | Planning complete | - |
 | 2. Database Schema | 0/TBD | Not started | - |
 | 3. Authentication | 0/TBD | Not started | - |
 | 4. Event and Player Management | 0/TBD | Not started | - |
