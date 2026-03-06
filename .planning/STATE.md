@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-05T09:03:06.045Z"
-last_activity: 2026-03-05 — 01-01 FastAPI backend scaffolded, 4 tests passing
+stopped_at: "Completed 02-01-PLAN.md — database schema deployed and tested"
+last_updated: "2026-03-06T00:00:00Z"
+last_activity: 2026-03-06 — 02-01 Supabase schema pushed, 4 integration tests passing
 progress:
   total_phases: 8
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
-  percent: 33
+  total_plans: 4
+  completed_plans: 4
+  percent: 40
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-04)
 
 **Core value:** Referees can reliably score matches in real-time and everyone — organizers, players, spectators — sees accurate live results instantly.
-**Current focus:** Phase 1 — Scaffolding
+**Current focus:** Phase 2 — Database Schema (complete)
 
 ## Current Position
 
-Phase: 1 of 8 (Scaffolding)
-Plan: 1 of 3 in current phase (01-01 complete)
+Phase: 2 of 8 (Database Schema)
+Plan: 1 of 1 in current phase (02-01 complete)
 Status: In Progress
-Last activity: 2026-03-05 — 01-01 FastAPI backend scaffolded, 4 tests passing
+Last activity: 2026-03-06 — 02-01 Supabase schema pushed, 13 tables live, 4 integration tests passing
 
-Progress: [███░░░░░░░] 33%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
@@ -74,6 +74,9 @@ Recent decisions affecting current work:
 - [Phase 01-scaffolding]: keep-warm.yml uses timeout-minutes: 1 on job to prevent runaway workflow minutes if Railway endpoint hangs
 - [Phase 01-scaffolding]: keep-warm.yml uses timeout-minutes: 1 on the job to prevent runaway workflow minutes if Railway endpoint hangs
 - [Phase 01-scaffolding]: .gitignore files separated per subproject (root/backend/frontend) for clarity and git performance
+- [Phase 02-database-schema]: teams table has no event_id column — teams belong to categories via FK; event context flows through categories.event_id
+- [Phase 02-database-schema]: test_service_role_insert creates real auth.users row via Admin API since seed.sql not applied during db push (only db reset)
+- [Phase 02-database-schema]: RLS tested behaviorally (anon INSERT returns 403) — information_schema not exposed via PostgREST (PGRST106)
 
 ### Pending Todos
 
@@ -87,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-05T09:03:06.043Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-database-schema/02-CONTEXT.md
+Last session: 2026-03-06T00:00:00Z
+Stopped at: Completed 02-01-PLAN.md — database schema deployed and tested
+Resume file: .planning/phases/02-database-schema/02-01-SUMMARY.md

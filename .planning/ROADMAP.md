@@ -13,7 +13,7 @@ PicklePoint is built in strict dependency order: infrastructure first, then auth
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Scaffolding** - Next.js, FastAPI, and Supabase repos wired together and deployed (completed 2026-03-05)
-- [ ] **Phase 2: Database Schema** - All tables, RLS policies, and migrations in place
+- [x] **Phase 2: Database Schema** - All tables, RLS policies, and migrations in place (completed 2026-03-06)
 - [ ] **Phase 3: Authentication** - Supabase Auth fully integrated across Next.js and FastAPI
 - [ ] **Phase 4: Event and Player Management** - Organizers create events, players register and check in
 - [ ] **Phase 5: Scoring Engine** - Server-authoritative point-by-point scoring with undo and win detection
@@ -67,7 +67,7 @@ Plans:
 ### Phase 4: Event and Player Management
 **Goal**: Organizers can create and run events, and players can register and check in
 **Depends on**: Phase 3
-**Requirements**: EVNT-01, EVNT-02, EVNT-03, EVNT-04, PLYR-01, PLYR-02, PLYR-03, PLYR-04
+**Requirements**: EVNT-01, EVNT-02, EVNT-03, EVNT-04, EVNT-05, EVNT-06, PLYR-01, PLYR-02, PLYR-03, PLYR-04
 **Success Criteria** (what must be TRUE):
   1. Organizer can create an event with name, date, and venue — the event appears in their dashboard in draft state
   2. Organizer can transition the event through draft → registration → live → completed, and each state change is reflected immediately
@@ -133,7 +133,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Scaffolding | 3/3 | Complete   | 2026-03-05 |
-| 2. Database Schema | 0/TBD | Not started | - |
+| 2. Database Schema | 1/1 | Complete   | 2026-03-06 |
 | 3. Authentication | 0/TBD | Not started | - |
 | 4. Event and Player Management | 0/TBD | Not started | - |
 | 5. Scoring Engine | 0/TBD | Not started | - |
