@@ -19,7 +19,9 @@
 - [ ] **EVNT-01**: Organizer can create event with name, date, venue
 - [ ] **EVNT-02**: Organizer can manage event lifecycle (draft → registration → live → completed)
 - [ ] **EVNT-03**: Organizer can create categories per event (singles, doubles, mixed, age groups)
-- [ ] **EVNT-04**: Organizer can add and manage courts for an event
+- [ ] **EVNT-04**: Organizer can add courts to an event and rename or remove them
+- [ ] **EVNT-05**: Organizer can toggle a court inactive during a live event — inactive courts receive no new match assignments; any in-progress match on that court continues until completion
+- [ ] **EVNT-06**: Organizer can force-move an in-progress match to a different active court
 
 ### Player Management
 
@@ -53,7 +55,7 @@
 
 ### Organizer Dashboard
 
-- [ ] **DASH-01**: Organizer can view court status overview with live data
+- [ ] **DASH-01**: Organizer can view court status overview with live data — inactive courts are visually distinguished (greyed out / "Court Closed") from active courts
 - [ ] **DASH-02**: Organizer can manage match queue
 - [ ] **DASH-03**: Organizer can view and filter player list
 
@@ -104,6 +106,8 @@
 | EVNT-02 | Phase 4 | Pending |
 | EVNT-03 | Phase 4 | Pending |
 | EVNT-04 | Phase 4 | Pending |
+| EVNT-05 | Phase 4 | Pending |
+| EVNT-06 | Phase 4 | Pending |
 | PLYR-01 | Phase 4 | Pending |
 | PLYR-02 | Phase 4 | Pending |
 | PLYR-03 | Phase 4 | Pending |
@@ -127,8 +131,8 @@
 | DASH-03 | Phase 7 | Pending |
 
 **Coverage:**
-- v1 requirements: 31 total
-- Mapped to phases: 31
+- v1 requirements: 33 total
+- Mapped to phases: 33
 - Unmapped: 0
 
 ---
